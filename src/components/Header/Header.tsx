@@ -1,9 +1,24 @@
 import { FC } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { FaBtc, FaSignOutAlt } from 'react-icons/fa';
 
+import { useAuth } from '../../hooks/useAuth';
+import { useAppDispatch } from '../../store/hooks';
+import { logout } from '../../store/user/userSlice';
+import { removeTokenFromLS } from '../../helpers/localStorage.helper';
+
 const Header: FC = () => {
-  const isAuth = true;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isAuth = useAuth();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    removeTokenFromLS('bmy-token');
+    toast.success('Вы вышли из аккаунта');
+    navigate('/');
+  };
 
   return (
     <header className="flex items-center  p-4 shadow-sm bg-slate-800 backdrop-blur-sm">
@@ -40,7 +55,7 @@ const Header: FC = () => {
       )}
 
       {isAuth ? (
-        <button className="btn btn-red">
+        <button onClick={logoutHandler} className="btn btn-red">
           <span>Log Out</span>
           <FaSignOutAlt />
         </button>
