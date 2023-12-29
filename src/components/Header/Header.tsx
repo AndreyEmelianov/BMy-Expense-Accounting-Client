@@ -33,21 +33,21 @@ const Header: FC = () => {
               <NavLink
                 to={'/'}
                 className={({ isActive }) => (isActive ? 'text-white' : 'text-white/50')}>
-                Home
+                Главная
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={'/transactions'}
                 className={({ isActive }) => (isActive ? 'text-white' : 'text-white/50')}>
-                Transactions
+                Транзакции
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={'/categories'}
                 className={({ isActive }) => (isActive ? 'text-white' : 'text-white/50')}>
-                Categories
+                Категории
               </NavLink>
             </li>
           </ul>
