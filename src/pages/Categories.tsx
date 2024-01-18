@@ -1,11 +1,12 @@
 import { FC, useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
 
-import { AiFillEdit, AiFillCloseCircle } from 'react-icons/ai';
-import { FaPlus } from 'react-icons/fa';
 import CategoryModal from '../components/CategoryModal/CategoryModal';
 import { axiosInstance } from '../api/axios.api';
 import { ICategory } from '../types/types';
+
+import { AiFillEdit, AiFillCloseCircle } from 'react-icons/ai';
+import { FaPlus } from 'react-icons/fa';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const categoriesAction = async ({ request }: any) => {
@@ -58,7 +59,7 @@ const Categories: FC = () => {
       <div className="mt-10 p-4 rounded-md bg-slate-800">
         <h1>Список ваших категорий :</h1>
         <div className="flex mt-2 items-center gap-2 flex-wrap">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <div
               key={category.id}
               className="group py-2 px-4 rounded-lg bg-blue-600 flex items-center relative gap-2">

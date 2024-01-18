@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import ErrorPage from '../pages/ErrorPage';
 import Home from '../pages/Home';
-import Transactions from '../pages/Transactions';
+import Transactions, { transactionAction, transactionLoader } from '../pages/Transactions';
 import Auth from '../pages/Auth';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import Categories, { categoriesAction, categoryLoader } from '../pages/Categories';
@@ -20,6 +20,8 @@ export const router = createBrowserRouter([
       },
       {
         path: 'transactions',
+        loader: transactionLoader,
+        action: transactionAction,
         element: (
           <ProtectedRoute>
             <Transactions />
