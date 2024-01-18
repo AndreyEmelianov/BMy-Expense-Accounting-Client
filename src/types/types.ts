@@ -43,8 +43,20 @@ export interface ITransaction {
 export interface IResponseTransactionLoader {
   categories: ICategory[];
   transactions: ITransaction[];
+  totalIncome: number;
+  totalExpense: number;
 }
 
 export interface ITransactionTableProps {
   limit: number;
+}
+
+export interface ICHartProps {
+  totalIncome: number;
+  totalExpense: number;
+}
+
+export interface IChartData {
+  value: number;
+  name: string;
 }

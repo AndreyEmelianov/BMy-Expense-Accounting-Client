@@ -1,18 +1,25 @@
 import { FC } from 'react';
 import { toast } from 'react-toastify';
+import { useLoaderData } from 'react-router-dom';
 
+import Chart from '../components/Chart/Chart';
 import TransactionForm from '../components/TransactionForm/TransactionForm';
 import TransactionTable from '../components/TransactionTable/TransactionTable';
 import { axiosInstance } from '../api/axios.api';
-import { ICategory, ITransaction } from '../types/types';
+import { ICategory, IResponseTransactionLoader, ITransaction } from '../types/types';
+import { formatToRUB } from '../helpers/currency.helper';
 
 export const transactionLoader = async () => {
   const categories = await axiosInstance.get<ICategory[]>('/categories');
-  const transactions = await axiosInstance.get<ITransaction>('/transactions');
+  const transactions = await axiosInstance.get<ITransaction[]>('/transactions');
+  const totalIncome = await axiosInstance.get<number>('/transactions/income/find');
+  const totalExpense = await axiosInstance.get<number>('/transactions/expense/find');
 
   const data = {
     categories: categories.data,
     transactions: transactions.data,
+    totalIncome: totalIncome.data,
+    totalExpense: totalExpense.data,
   };
   return data;
 };
@@ -48,6 +55,8 @@ export const transactionAction = async ({ request }: any) => {
 };
 
 const Transactions: FC = () => {
+  const { totalExpense, totalIncome } = useLoaderData() as IResponseTransactionLoader;
+
   return (
     <>
       <div className="grid grid-cols-3 gap-4 mt-4 items-start">
@@ -58,16 +67,22 @@ const Transactions: FC = () => {
         <div className="rounded-md bg-slate-800 p-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <p className="uppercase text-md font-bold text-center">Total income</p>
-              <p className="bg-green-600 p-1 rounded-sm mt-2 text-center">100p</p>
+              <p className="uppercase text-md font-bold text-center">Общий доход</p>
+              <p className="bg-green-600 p-1 rounded-sm mt-2 text-center">
+                {formatToRUB.format(totalIncome)}
+              </p>
             </div>
             <div>
-              <p className="uppercase text-md font-bold text-center">Total expense</p>
-              <p className="bg-red-500 p-1 rounded-sm mt-2 text-center">100p</p>
+              <p className="uppercase text-md font-bold text-center">Общий расход</p>
+              <p className="bg-red-500 p-1 rounded-sm mt-2 text-center">
+                {formatToRUB.format(totalExpense)}
+              </p>
             </div>
           </div>
 
-          <>chart</>
+          <>
+            <Chart totalExpense={totalExpense} totalIncome={totalIncome} />
+          </>
         </div>
       </div>
 

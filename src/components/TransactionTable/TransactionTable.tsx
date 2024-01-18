@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { Form, useLoaderData } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 import {
   IResponseTransactionLoader,
@@ -10,7 +11,6 @@ import {
 import { formatDate } from '../../helpers/date.helper';
 import { formatToRUB } from '../../helpers/currency.helper';
 import { axiosInstance } from '../../api/axios.api';
-import ReactPaginate from 'react-paginate';
 
 const TransactionTable: FC<ITransactionTableProps> = ({ limit = 3 }) => {
   const { transactions } = useLoaderData() as IResponseTransactionLoader;
