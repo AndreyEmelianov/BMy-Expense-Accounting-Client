@@ -44,3 +44,7 @@ export interface IResponseTransactionLoader {
   categories: ICategory[];
   transactions: ITransaction[];
 }
+
+export interface ITransactionTableProps {
+  limit: number;
+}
